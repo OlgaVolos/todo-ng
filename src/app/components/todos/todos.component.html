@@ -1,0 +1,50 @@
+<h1>Todos</h1>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Create todo</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="myFormGroup" (ngSubmit)="save(todo)">
+      <div class="form-group">
+        <label>Title: </label>
+        <div class="input-group">
+          <input class="form-control" type="text" name="title" [formControl]="titleControl">
+        </div>
+          <div class="error-text" *ngIf="titleControl.invalid">
+          Type text (min 2 symbol)
+          </div>
+
+      </div>
+      <div class="form-group">
+        <label>Description: </label>
+        <div class="input-group">
+          <input class="form-control" type="text" name="description" [formControl]="descriptionControl">
+        </div>
+        <div class="error-text" *ngIf="descriptionControl.invalid">
+          Type text (min 2 symbol)
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button [disabled]="myFormGroup.invalid" type="button" class="btn btn-outline-dark" (click)="[modal.close('Save click'), save(todo)]">Save todo</button>
+  </div>
+</ng-template>
+<div class="align-items-center">
+  <button class="btn btn-primary btn-lg btn-block" (click)="open(content)">Create new todo</button>
+</div>
+
+
+
+<hr>
+
+<app-todo *ngFor="let todo of todos"
+          [todo]="todo"
+          (todoDeleteLift)="deleteTodo(todo)"
+          (todoEditLift)="editTodo(todo)"
+
+></app-todo>

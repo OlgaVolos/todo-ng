@@ -1,0 +1,9 @@
+.todo-flex{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+button{
+  width: 100px;
+  margin-bottom: 5px;
+}
