@@ -7,8 +7,8 @@ import {TodosComponent} from './components/todos/todos.component';
 import {TodoComponent} from './components/todos/todo/todo.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {AppRoutingModule} from "./app-routing.module";
-import { TodoEditorComponent } from './components/todo-editor/todo-editor.component';
-import { DeleteConfirmComponent } from './components/myConfirm/delete-confirm/delete-confirm.component';
+import {TodoEditorComponent} from './components/todo-editor/todo-editor.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,6 @@ import { DeleteConfirmComponent } from './components/myConfirm/delete-confirm/de
     TodosComponent,
     TodoComponent,
     TodoEditorComponent,
-    DeleteConfirmComponent,
 
   ],
   imports: [
@@ -24,9 +23,12 @@ import { DeleteConfirmComponent } from './components/myConfirm/delete-confirm/de
     ReactiveFormsModule,
     FormsModule,
     NgbModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
+
 })
 export class AppModule { }

@@ -9,6 +9,7 @@ export class TodoService {
   todos: ITodo[] = [];
   todo: ITodo;
   myFormGroup: FormGroup;
+  private key = 'todo'
 
 
   constructor() {
@@ -16,47 +17,37 @@ export class TodoService {
   }
 
   getAllTodos() {
-    return this.todos
+    const storage = localStorage.getItem(this.key);
+    return storage ? JSON.parse(storage) : this.todos
   }
 
   saveTodo(todo: ITodo) {
-    this.todos.push(todo)
+    const storage = localStorage.getItem(this.key);
+    this.todos = storage ? JSON.parse(storage) : [];
+    this.todos.push(todo);
+    localStorage.setItem(this.key, JSON.stringify(this.todos))
   }
 
-  // addTodoToLocalStorage(todo: ITodo){
-  //   if(localStorage.getItem('todo')){
-  //     this.todos = [...this.todos, todo];
-  //   }else {
-  //    this.todos = JSON.parse(<string>localStorage.getItem('todo'))
-  //   }
-  // }
 
-  addTodoToLocalStorage(todo: ITodo) {
-    let todosArray = []
-    if (localStorage.getItem('todo')) {
-      todosArray = JSON.parse(<string>localStorage.getItem('todo'));
-      todosArray = [...todosArray, todo]
-    } else {
-      todosArray = [todo]
-    }
-    localStorage.setItem('todo', JSON.stringify(todo))
-  }
-  deleteTodo(index: number){
-    const todoForDelete = this.todos.splice(index, 1);
-    // localStorage.removeItem(todo(index))
+  deleteTodo(index: number) {
+    this.todos.splice(index, 1);
+
 
   }
-  deleteTodoFromLocalStorage(todo: ITodo){
+
+  deleteTodoFromLocalStorage(todo: ITodo) {
     let deleteTodo = JSON.parse(<string>localStorage.getItem('todo'));
     let indexToRemove = 0;
     deleteTodo.splice(indexToRemove, 1);
     localStorage.setItem('todo', JSON.stringify(deleteTodo))
 
   }
-
-  editTodo(index: number, editedTodo: ITodo){
-    this.todos[index] = editedTodo;
-
+  updateTodo(index: number, updatedTodo: ITodo) {
+    this.todos[index] = updatedTodo
   }
+// updateTodo(todo: ITodo){
+//     const storage = localStorage.getItem(this.key);
+//    this.todos =  this.todos.includes(storage) ? this.todos:JSON.parse (storage)
+// }
 
 }

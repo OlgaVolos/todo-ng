@@ -32,10 +32,7 @@ export class TodosComponent implements OnInit {
 
   save(todo: ITodo) {
     this.todoService.saveTodo(this.myFormGroup.value);
-
-    this.todo = Object.assign(this.todos, this.myFormGroup.value)
-    localStorage.setItem('todo', JSON.stringify(this.todos))
-    this.todoService.addTodoToLocalStorage(this.todo)
+    this.todos = this.todoService.getAllTodos()
     this.myFormGroup.reset()
 
   }
@@ -61,13 +58,11 @@ export class TodosComponent implements OnInit {
   deleteTodo(todo: ITodo): void {
     const index = this.todos.indexOf(todo);
     this.todoService.deleteTodo(index);
-    this.todoService.deleteTodoFromLocalStorage(todo)
+    this.todoService.deleteTodoFromLocalStorage(todo);
+    this.todos  = this.todoService.getAllTodos()
+    console.log(todo)
+    console.log(index);
   }
 
-  editTodo(todo: ITodo): void {
-    const index = this.todos.indexOf(todo);
-    this.todoService.editTodo(index, todo);
 
-
-  }
 }
