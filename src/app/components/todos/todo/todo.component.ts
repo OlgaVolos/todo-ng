@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ITodo} from "../../../interfaces";
 import {Router} from "@angular/router";
+import {TodoService} from "../../../services/todo.service";
 
 @Component({
   selector: 'app-todo',
@@ -18,7 +19,7 @@ export class TodoComponent implements OnInit {
 
 
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private todoService:TodoService) {
   }
 
   ngOnInit(): void {
@@ -31,7 +32,8 @@ export class TodoComponent implements OnInit {
 
   editTodo() {
     this.router.navigate(['edit'], {state: this.todo} )
-    // this.todoEditLift.emit(this.todo);
+    this.todoEditLift.emit(this.todo);
+    localStorage.getItem('todo')
 
 
   }

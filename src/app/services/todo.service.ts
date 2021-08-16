@@ -1,12 +1,14 @@
 import {Injectable} from '@angular/core';
 import {ITodo} from "../interfaces";
+import {FormGroup} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
   todos: ITodo[] = [];
-  todo: ITodo
+  todo: ITodo;
+  myFormGroup: FormGroup;
 
 
   constructor() {
@@ -40,11 +42,21 @@ export class TodoService {
     localStorage.setItem('todo', JSON.stringify(todo))
   }
   deleteTodo(index: number){
-    this.todos.splice(index, 1)
+    const todoForDelete = this.todos.splice(index, 1);
+    // localStorage.removeItem(todo(index))
 
   }
+  deleteTodoFromLocalStorage(todo: ITodo){
+    let deleteTodo = JSON.parse(<string>localStorage.getItem('todo'));
+    let indexToRemove = 0;
+    deleteTodo.splice(indexToRemove, 1);
+    localStorage.setItem('todo', JSON.stringify(deleteTodo))
+
+  }
+
   editTodo(index: number, editedTodo: ITodo){
-    this.todos[index] = editedTodo
+    this.todos[index] = editedTodo;
 
   }
+
 }

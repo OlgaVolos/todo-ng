@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ITodo} from "../../interfaces";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {TodoService} from "../../services/todo.service";
 
 @Component({
   selector: 'app-todo-editor',
@@ -18,9 +19,10 @@ export class TodoEditorComponent implements OnInit {
   });
 
 
-  constructor() {}
+  constructor(private todoService:TodoService) {}
 
   ngOnInit(): void {
+   return this.editFormGroup.updateValueAndValidity()
 
 
   }

@@ -8,6 +8,7 @@ import {TodoComponent} from './components/todos/todo/todo.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {AppRoutingModule} from "./app-routing.module";
 import { TodoEditorComponent } from './components/todo-editor/todo-editor.component';
+import { DeleteConfirmComponent } from './components/myConfirm/delete-confirm/delete-confirm.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { TodoEditorComponent } from './components/todo-editor/todo-editor.compon
     TodosComponent,
     TodoComponent,
     TodoEditorComponent,
+    DeleteConfirmComponent,
 
   ],
   imports: [

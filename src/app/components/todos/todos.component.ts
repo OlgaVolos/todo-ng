@@ -60,7 +60,8 @@ export class TodosComponent implements OnInit {
 
   deleteTodo(todo: ITodo): void {
     const index = this.todos.indexOf(todo);
-    this.todoService.deleteTodo(index)
+    this.todoService.deleteTodo(index);
+    this.todoService.deleteTodoFromLocalStorage(todo)
   }
 
   editTodo(todo: ITodo): void {
