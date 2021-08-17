@@ -6,7 +6,7 @@ import {TodoEditorComponent} from "./components/todo-editor/todo-editor.componen
 
 let routes: Routes = [
   {path: '', component: TodosComponent},
-  {path: 'edit', component: TodoEditorComponent}
+  {path: 'edit/:id', component: TodoEditorComponent}
 
 ]
 @NgModule({

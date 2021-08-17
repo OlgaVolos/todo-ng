@@ -1,7 +1,7 @@
 <h1>Edit todo</h1>
 
   <div>
-    <form [formGroup]="editFormGroup" (ngSubmit)="changeEditTodo(editTodo)" >
+    <form [formGroup]="editFormGroup"  >
       <div class="form-group">
         <label>Title: </label>
         <div class="input-group">
@@ -25,7 +25,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button [disabled]="editFormGroup.invalid" type="submit" class="btn btn-primary">Change todo</button>
+    <button [disabled]="editFormGroup.invalid" type="submit" class="btn btn-primary" (click)="changeEditTodo()">Change todo</button>
     <button  [disabled]="editFormGroup.invalid" type="button" class="btn btn-primary" (click)="cancelEditTodo()">Cancel</button>
     <button [disabled]="editFormGroup.invalid" type="button" class="btn btn-primary" (click)="deleteEditTodo()">Delete</button>
   </div>

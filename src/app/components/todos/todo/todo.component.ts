@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ITodo} from "../../../interfaces";
 import {Router} from "@angular/router";
-import {TodoService} from "../../../services/todo.service";
 
 
 @Component({
@@ -10,36 +9,27 @@ import {TodoService} from "../../../services/todo.service";
   styleUrls: ['./todo.component.css']
 })
 export class TodoComponent implements OnInit {
-
   @Input()
   todo: ITodo;
 
   @Output()
-  todoDeleteLift = new EventEmitter<ITodo>();
-  // @Output()
-  // todoEditLift = new EventEmitter<ITodo>()
+  todoDeleteLift = new EventEmitter<number>();
 
 
-
-
-  constructor(private router: Router, private todoService:TodoService) {
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {
   }
 
 
-
-
-  OnDeleteTodo() :void {
-   this.todoDeleteLift.emit(this.todo);
+  OnDeleteTodo(): void {
+    this.todoDeleteLift.emit(this.todo.id);
 
   }
 
-  editTodo() {
-    this.router.navigate(['edit'], {state: this.todo} )
-    // this.todoEditLift.emit(this.todo);
-    localStorage.getItem('todo')
+  editTodo(): void {
+    this.router.navigate(['edit', this.todo.id])
 
 
   }

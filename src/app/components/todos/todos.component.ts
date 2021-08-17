@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {ITodo} from "../../interfaces";
-import {TodoService} from "../../services/todo.service";
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {TodoService} from "../../services";
 
 @Component({
   selector: 'app-todos',
@@ -13,9 +13,8 @@ export class TodosComponent implements OnInit {
   todos: ITodo[];
   todo: ITodo;
   closeResult = '';
-  private content: any
 
-  titleControl = new FormControl('', [Validators.required, Validators.minLength(2)])
+  titleControl = new FormControl('', [Validators.required, Validators.minLength(1)])
   descriptionControl = new FormControl('', [Validators.required, Validators.minLength(2)])
   myFormGroup: FormGroup = new FormGroup({
     title: this.titleControl,
@@ -23,14 +22,14 @@ export class TodosComponent implements OnInit {
   });
   form: NgForm;
 
-  constructor(private todoService: TodoService, private modalService: NgbModal ) {
+  constructor(private todoService: TodoService, private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
     this.todos = this.todoService.getAllTodos();
   }
 
-  save(todo: ITodo) {
+  save(): void {
     this.todoService.saveTodo(this.myFormGroup.value);
     this.todos = this.todoService.getAllTodos()
     this.myFormGroup.reset()
@@ -55,13 +54,11 @@ export class TodosComponent implements OnInit {
     }
   }
 
-  deleteTodo(todo: ITodo): void {
-    const index = this.todos.indexOf(todo);
-    this.todoService.deleteTodo(index);
-    this.todoService.deleteTodoFromLocalStorage(todo);
-    this.todos  = this.todoService.getAllTodos()
-    console.log(todo)
-    console.log(index);
+  delete(id: number): void {
+    this.todoService.deleteTodo(id);
+    this.ngOnInit()
+
+
   }
 
 
