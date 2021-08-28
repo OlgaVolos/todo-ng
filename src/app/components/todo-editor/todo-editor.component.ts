@@ -30,9 +30,6 @@ export class TodoEditorComponent implements OnInit {
       title: new FormControl(this.editTodo?.title, [Validators.required, Validators.minLength(1)]),
       description: new FormControl(this.editTodo?.description, [Validators.required, Validators.minLength(2)])
     })
-    return this.editFormGroup.updateValueAndValidity()
-
-
   }
 
   changeEditTodo(): void {
