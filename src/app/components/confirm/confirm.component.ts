@@ -20,9 +20,9 @@ export class ConfirmComponent implements OnInit {
 
   close(): void {
     this.dialogRef.close(false)
-  }
+  };
 
   SendOk(): void {
     this.dialogRef.close(true)
-  }
+  };
 }
