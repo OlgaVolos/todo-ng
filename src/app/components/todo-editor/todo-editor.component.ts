@@ -3,6 +3,8 @@ import {ITodo} from "../../interfaces";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TodoService} from "../../services";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmComponent} from "../confirm/confirm.component";
 
 
 @Component({
@@ -15,7 +17,9 @@ export class TodoEditorComponent implements OnInit {
   editFormGroup: FormGroup
 
 
-  constructor(private todoService: TodoService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private todoService: TodoService,
+              private router: Router, private activatedRoute: ActivatedRoute,
+              private matDialog: MatDialog) {
     this.activatedRoute.params.subscribe(({id}) => {
       this.editTodo = this.todoService.findById(+id)
     })
@@ -32,9 +36,15 @@ export class TodoEditorComponent implements OnInit {
   }
 
   changeEditTodo(): void {
-    this.todoService.saveTodo({...this.editTodo, ...this.editFormGroup.getRawValue()})
-    this.router.navigate([''])
-    // console.log('change work');
+    this.matDialog.open(ConfirmComponent, {
+      disableClose: true,
+      data: 'Do you want to change?'
+    }).afterClosed().subscribe(value => {
+      if(value){
+        this.todoService.saveTodo({...this.editTodo, ...this.editFormGroup.getRawValue()})
+        this.router.navigate([''])
+      }
+    })
   }
 
   cancelEditTodo(): void {
@@ -43,8 +53,15 @@ export class TodoEditorComponent implements OnInit {
   }
 
   deleteEditTodo(): void {
-    this.todoService.deleteTodo(this.editTodo.id)
-    console.log('delete work');
-    this.router.navigate([''])
+    this.matDialog.open(ConfirmComponent, {
+      disableClose: true,
+      data: "Do you want to delete?"
+    }).afterClosed().subscribe(value => {
+      if(value){
+        this.todoService.deleteTodo(this.editTodo.id)
+        console.log('delete work');
+        this.router.navigate([''])
+      }
+    })
   }
 }

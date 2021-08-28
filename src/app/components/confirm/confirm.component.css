@@ -1,0 +1,18 @@
+.container {
+  height: 200px;
+  width: 350px;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: cornflowerblue;
+  color: white;
+  align-items: center;
+}
+button{
+  margin: 5px;
+
+}
+h1{
+  margin: 10px auto;
+}

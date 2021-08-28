@@ -3,6 +3,8 @@ import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {ITodo} from "../../interfaces";
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {TodoService} from "../../services";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmComponent} from "../confirm/confirm.component";
 
 @Component({
   selector: 'app-todos',
@@ -22,7 +24,7 @@ export class TodosComponent implements OnInit {
   });
   form: NgForm;
 
-  constructor(private todoService: TodoService, private modalService: NgbModal) {
+  constructor(private todoService: TodoService, private modalService: NgbModal, private matDialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -31,8 +33,8 @@ export class TodosComponent implements OnInit {
 
   save(): void {
     this.todoService.saveTodo(this.myFormGroup.value);
-    this.todos = this.todoService.getAllTodos()
-    this.myFormGroup.reset()
+    this.ngOnInit();
+    this.myFormGroup.reset();
 
   }
 
@@ -40,11 +42,11 @@ export class TodosComponent implements OnInit {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.closeResult = `Dismissed ${TodosComponent.getDismissReason(reason)}`;
     });
   }
 
-  private getDismissReason(reason: any): string {
+  private static getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
@@ -55,10 +57,15 @@ export class TodosComponent implements OnInit {
   }
 
   delete(id: number): void {
-    this.todoService.deleteTodo(id);
-    this.ngOnInit()
-
-
+    this.matDialog.open(ConfirmComponent, {
+      disableClose: true,
+      data: 'Do you want to delete?'
+    }).afterClosed().subscribe(value => {
+      if(value){
+        this.todoService.deleteTodo(id);
+        this.ngOnInit()
+      }
+    })
   }
 
 
